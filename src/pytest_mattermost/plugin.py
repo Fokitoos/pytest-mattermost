@@ -36,7 +36,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         "--mm-auth-method",
         default="bot_token",
         choices=["bot_token", "webhook"],
-        help="Authentication method (default: bot_token).",
+        help="Authentication method (default: webhook).",
     )
     group.addoption(
         "--mm-on-failure-only",
