@@ -1,0 +1,67 @@
+[project]
+name = "pytest-mattermost"
+version = "0.1.0"
+description = "Pytest plugin that posts test run summaries to a Mattermost channel."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "fokitoo", email = "john.fokianos@gmail.com" }
+]
+requires-python = ">=3.12"
+keywords = ["pytest", "mattermost", "reporting", "notifications", "ci"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "loguru>=0.7.3",
+    "pydantic>=2.12.5",
+    "pytest>=9.0.2",
+    "requests>=2.33.1",
+    "urllib3>=2.6.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/fokitoo/pytest-mattermost"
+Repository = "https://github.com/fokitoo/pytest-mattermost"
+Issues = "https://github.com/fokitoo/pytest-mattermost/issues"
+
+[project.entry-points.pytest11]
+mattermost = "pytest_mattermost.plugin"
+
+[build-system]
+requires = ["uv_build>=0.10.11,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.8",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific rules
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pytest_mattermost"]
