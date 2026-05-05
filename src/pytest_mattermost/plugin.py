@@ -18,6 +18,7 @@ import time
 import pytest
 from loguru import logger
 
+from . import METADATA_KEY
 from .client import AuthMethod, MattermostClient, MattermostConfig, MattermostPostError
 from .report import FailedTest, TestRunSummary, render_summary
 
@@ -73,6 +74,7 @@ class MattermostPlugin:
         self._xfailed = 0
         self._xpassed = 0
         self._failures: list[FailedTest] = []
+        self._metadata: dict[str, str] = {}
         self._start_time: float | None = None
         self._end_time: float | None = None
 
@@ -91,6 +93,7 @@ class MattermostPlugin:
 
     def pytest_sessionfinish(self, session: pytest.Session, exitstatus: int) -> None:
         self._end_time = time.monotonic()
+        self._metadata = session.config.stash.get(METADATA_KEY, {})
 
         summary = self._build_summary()
 
@@ -152,6 +155,7 @@ class MattermostPlugin:
             xpassed=self._xpassed,
             duration_seconds=duration,
             failures=self._failures,
+            metadata=self._metadata,
             project=self._project,
             branch=self._branch,
             commit=self._commit,
